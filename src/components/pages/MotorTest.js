@@ -32,10 +32,10 @@ export const MotorTest = () => {
 
                         temp: values[0] ? Number(values[0]) : 0,
                         humidity: values[1] ? Number(values[1]) : 0,
-                        rainfall: values[2] ? Number(values[2]) : 0,
-                        index: values[3] ? Number(values[3]) : 0,
-                        angle: values[4] ? Number(values[4]) : 0,
-                        direction: values[5] ? values[5].trim() : "",
+                        index: values[2] ? Number(values[2]) : 0,
+                        angle: values[3] ? Number(values[3]) : 0,
+                        direction: values[4] ? values[4].trim() : "",
+                        rainfall: values[5] ? Number(values[5]) : 0,
                     };
                 });
 
@@ -73,7 +73,7 @@ export const MotorTest = () => {
         if (!records.length) return;
         const csv = [
             ["Timestamp", "Temperature (°C)", "Humidity (%)", "Rainfall (mm)", "Index", "Angle", "Direction"],
-            ...records.map(r => [r.time, r.temp, r.humidity, r.rainfall, r.index, r.angle, r.direction])
+            ...records.map(r => [new Date(r.timestamp).toLocaleDateString(), r.temp, r.humidity, r.rainfall, r.index, r.angle, r.direction])
         ].map(e => e.join(",")).join("\n");
 
         const blob = new Blob([csv], { type: "text/csv;charset=utf-8;" });
@@ -274,6 +274,7 @@ export const MotorTest = () => {
                                     chartType="line"
                                     controls={{ ...controls, show: true }}
                                     color={chart.color}
+                                    title={chart.label}
                                 />
                             </div>
                         ))}
